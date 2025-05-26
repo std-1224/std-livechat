@@ -3,6 +3,9 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import "firebase/compat/database";
 
+// Debug: Log the database URL
+console.log("Database URL:", process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL);
+
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -14,7 +17,18 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-firebase.initializeApp(firebaseConfig);
+// Debug: Log the entire config
+console.log("Firebase Config:", {
+  ...firebaseConfig,
+  apiKey: firebaseConfig.apiKey ? "exists" : "missing",
+});
+
+// Initialize Firebase only if we have a database URL
+if (!firebaseConfig.databaseURL) {
+  console.error("Firebase Database URL is missing!");
+} else {
+  firebase.initializeApp(firebaseConfig);
+}
 
 const db = firebase.firestore();
 const realtimeDb = firebase.database();
