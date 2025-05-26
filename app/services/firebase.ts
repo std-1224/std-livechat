@@ -3,8 +3,6 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import "firebase/compat/database";
 
-// Debug: Log the database URL
-console.log("Database URL:", process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL);
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -16,12 +14,6 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
-
-// Debug: Log the entire config
-console.log("Firebase Config:", {
-  ...firebaseConfig,
-  apiKey: firebaseConfig.apiKey ? "exists" : "missing",
-});
 
 // Initialize Firebase only if we have a database URL
 if (!firebaseConfig.databaseURL) {
